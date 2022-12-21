@@ -1,0 +1,21 @@
+<form id="new-task-form" hx-post="/tasks" hx-swap="afterbegin" hx-target="#list-tasks-body">
+  {% include "tasks/_item_form_elts.html" %}
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+    </div>
+    <div class="field-body">
+      <div class="control">
+        <input class="button is-primary" type="submit" value="Create">
+      </div>
+      <div class="control">
+        {# It is mandatory to emit a resquest in a htmx tag.
+           GET / (307 TempRedirect) even if the result is discarded.
+        #}
+        <button class="button" hx-get="/" hx-swap="delete" hx-target="#new-task-form">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

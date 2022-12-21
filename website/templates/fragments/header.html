@@ -1,0 +1,27 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-brand" href="/">
+      <img src="/static/images/TaskW-black-128.png" height="67" width="190">
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="taskw-menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="taskw-menu" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/tasks">Tasks</a>
+      <a class="navbar-item" href="/projects">Projects</a>
+      <div class="navbar-item">
+        <div class="field">
+          <div class="control">
+            <button class="button" type="button" hx-post="/sync" hx-swap="none">Sync</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

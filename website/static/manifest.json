@@ -1,0 +1,13 @@
+{
+  "name": "TaskW",
+  "short_name": "TaskW",
+  "description": "Taskwarrior web frontend.",
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#303030",
+  "icons": [{
+    "src": "images/icon-256.png",
+    "sizes": "256x256",
+    "type": "image/png"
+  }]
+}

@@ -1,0 +1,44 @@
+<div class="columns">
+  <div class="column">
+    <div id="tabs-tasks" class="tabs">
+      <ul>
+        <li class="{{ 'is-active' if tab == 'pending' }}">
+          <a hx-get="/tasks/tabs?tab=pending&tags={{ tags }}">
+            Pending
+          </a>
+        </li>
+        <li class="{{ 'is-active' if tab == 'waiting' }}">
+          <a hx-get="/tasks/tabs?tab=waiting&tags={{ tags }}">
+            Waiting
+          </a>
+        </li>
+        <li class="{{ 'is-active' if tab == 'completed' }}">
+          <a hx-get="/tasks/tabs?tab=completed&tags={{ tags }}">
+            Completed
+          </a>
+        </li>
+        <li class="{{ 'is-active' if tab == 'deleted' }}">
+          <a hx-get="/tasks/tabs?tab=deleted&tags={{ tags }}">
+            Deleted
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="column is-one-third">
+    <div class="field">
+      <p class="control is-expanded has-icons-left">
+        <input class="input" type="search" name="tags"
+          placeholder="tags..." value="{{ tags }}"
+          hx-get="/tasks/tabs?tab={{ tab }}"
+        >
+        <span class="icon is-left">
+          <i class="fa-solid fa-tags"></i>
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+
+{% include "tasks/_list.html" %}

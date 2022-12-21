@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Projects
+</h1>
+
+<div class="content">
+{% for project in projects %}
+  <h2 class="title">
+    <a href="/projects/{{ project.name |urlb64encode }}">{{ project.name |e }}</a>
+    <progress class="progress is-primary" value="{{ project.completeness_percent() }}" max="100">{{ project.completeness_percent() }}%</progress>
+  </h2>
+
+  {% set tasks = project.pending() %}
+  {% include "tasks/_list.html" %}
+{% endfor %}
+</div>
+{% endblock %}

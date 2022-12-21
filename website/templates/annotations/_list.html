@@ -1,0 +1,13 @@
+<ul id="list-annotations" hx-get="/tasks/{{ task.uuid }}/annotations" hx-trigger="reload-annotations" hx-swap="outerHTML">
+{% for anno in task.annotations %}
+  {% include "annotations/_item.html" %}
+{% endfor %}
+  <li id="new-annotation">
+    <form hx-post="/tasks/{{ task.uuid }}/annotations" hx-swap="beforebegin" hx-target="#new-annotation">
+      <div class="field is-horizontal">
+        <input class="input is-small" type="text" id="annotation" name="annotation">
+        <input class="button is-small" type="submit" value="Add">
+      </div>
+    </form>
+  </li>
+</ul>

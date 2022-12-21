@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="columns is-mobile">
+  <div class="column is-narrow">
+    <h1 class="title">
+      Tasks
+    </h1>
+  </div>
+
+  <div class="column">
+    <button class="button is-pulled-right" hx-get="/tasks/new" hx-swap="innerHTML" hx-target="#new-task">
+      + Add a task
+    </button>
+  </div>
+</div>
+
+<div id="new-task">
+</div>
+
+<div id="tasks"
+  hx-get="/tasks/tabs?tab={{ tab |e }}&tags={{ tags |e }}"
+  hx-trigger="load" hx-target="#tasks" hx-swap="innerHTML"
+>
+</div>
+
+{% endblock %}

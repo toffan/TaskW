@@ -1,0 +1,26 @@
+.task-row-pending {
+}
+.task-row-waiting {
+    background-color: #e6e6e6;
+}
+.task-row-completed {
+    background-color: #effaf5;
+}
+.task-row-deleted {
+    background-color: #fffaeb;
+}
+.task-row-due {
+    background-color: #feecf0;
+    /* background-color: #f14668; */
+}
+.task-desc-pending {
+}
+.task-desc-waiting {
+
+}
+.task-desc-completed {
+}
+.task-desc-deleted {
+    text-decoration: line-through;
+}
+

@@ -1,0 +1,139 @@
+{# Parameters: task: Task, project: str, list_tags: list[str], list_projects: list[str] #}
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label" for="description">Description</label>
+  </div>
+  <div class="field-body">
+    <p class="control is-expanded">
+      <input
+        class="input"
+        type="text"
+        id="description"
+        name="description"
+      {% if task %}
+        value="{{ task.description }}"
+      {% endif %}
+      >
+    </p>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label" for="project">Project</label>
+  </div>
+  <div class="field-body">
+    <p class="control">
+      <input
+        class="input {{ 'is-static' if project }}"
+        type="text"
+        id="project"
+        name="project"
+        list="list_projects"
+      {% if task %}
+        value="{{ task.project if task.project }}"
+      {% elif project %}
+        value="{{ project }}"
+        readonly
+      {% endif %}
+      >
+    </p>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label" for="due">Due date</label>
+  </div>
+  <div class="field-body">
+    <p class="control has-icons-left">
+      <input
+        class="input"
+        type="text"
+        id="due"
+        name="due"
+      {% if task %}
+        value="{{ task.due.date() if task.due is not none }}"
+      {% endif %}
+      >
+      <span class="icon is-left">
+        <i class="fa-solid fa-calendar-days"></i>
+      </span>
+    </p>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label" for="wait">Hide until</label>
+  </div>
+  <div class="field-body">
+    <p class="control has-icons-left">
+      <input
+        class="input"
+        type="text"
+        id="wait"
+        name="wait"
+      {% if task %}
+        value="{{ task.wait.date() if task.wait is not none }}"
+      {% endif %}
+      >
+      <span class="icon is-left">
+        <i class="fa-solid fa-calendar-days"></i>
+      </span>
+    </p>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label" for="priority">Priority</label>
+  </div>
+  <div class="field-body">
+    <div class="control">
+      <input class="radio" type="radio" id="none" name="priority" value="" {{ "checked" if not task or task.priority is none }}>
+      <label class="radio" for="none">None</label>
+      <input class="radio" type="radio" id="low" name="priority" value="L" {{ "checked" if task and task.priority == 'L' }}>
+      <label class="radio" for="low">Low</label>
+      <input class="radio" type="radio" id="medium" name="priority" value="M" {{ "checked" if task and task.priority == 'M' }}>
+      <label class="radio" for="medium">Medium</label>
+      <input class="radio" type="radio" id="high" name="priority" value="H" {{ "checked" if task and task.priority == 'H' }}>
+      <label class="radio" for="high">High</label>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label" for="tags">Tags</label>
+  </div>
+  <div class="field-body">
+    <p class="control has-icons-left">
+      {# Multiple selection only works for type="email" and on Chrome or Opera.
+         cf. https://stackoverflow.com/questions/14148538/multiple-selections-with-datalist
+         However with type="email", the browser tries to validate the content so it does not work
+      #}
+      <input class="input" type="text"
+        id="tags" name="tags" list="list_tags"
+      {% if task %}
+        value="{{ task.tags |join(', ') }}"
+      {% endif %}
+      >
+      <span class="icon is-left">
+        <i class="fa-solid fa-tags"></i>
+      </span>
+    </p>
+  </div>
+</div>
+
+<datalist id="list_projects">
+{% for proj in list_projects %}
+  <option>{{ proj }}</option>
+{% endfor %}
+</datalist>
+
+<datalist id="list_tags">
+{% for tag in list_tags %}
+  <option>{{ tag }}</option>
+{% endfor %}
+</datalist>

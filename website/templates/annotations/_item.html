@@ -1,0 +1,8 @@
+<li>
+  <button class="button is-danger is-small" hx-delete="/tasks/{{ task.uuid }}/annotations/{{ anno.description |urlb64encode }}" hx-target="closest li" hx-swap="outerHTML">
+    <span class="icon">
+      <i class="fa-solid fa-trash-can"></i>
+    </span>
+  </button>
+  <strong>{{ anno.entry |hrdate }}:</strong> {{ anno.description |e }}
+</li>

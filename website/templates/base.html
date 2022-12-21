@@ -1,0 +1,55 @@
+{#  #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>TaskW</title>
+  <link rel="icon" href="/static/images/icon-256.png" sizes="256x256" />
+  <link rel="icon" href="/static/images/icon-512.png" sizes="512x512" />
+
+  <!-- Htmx -->
+  <script src="https://unpkg.com/htmx.org@1.7.0"
+    integrity="sha256-bzGSS4QmlJFKScN8CwRQiW8/DWSHr7ETQNezHdCO598="
+    crossorigin="anonymous" defer>
+  </script>
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    integrity="sha256-rTpdO0HXBCNpreAHcu6tB2Ppg515Vo+5GtYSsnNLz+8="
+    crossorigin="anonymous">
+  <script src="/static/js/navbar-burger.js"
+    integrity="sha256-1KraqMRKBnjJD+067CJHoid3bIbFrScQC/GExk0avqA="
+    crossorigin="anonymous" defer>
+  </script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet"
+    href="/static/fontawesome-free-6.2.1-web/css/fontawesome.css"
+    integrity="sha256-NDIn9yPLJLRpCZ2Wf9cR10bvhm0PN0/dLHXn2nvBdTg=">
+  <link rel="stylesheet"
+    href="/static/fontawesome-free-6.2.1-web/css/solid.min.css"
+    integrity="sha256-PWjOYKvQnR+QNLq3ts8OC0/uUzdQ2NkfEulijXY8Xfo=">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css"> -->
+
+  <!-- Custom classes -->
+  <link rel="stylesheet" href="/static/css/styles.css">
+
+  <!-- Mobile friendliness -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="red" />
+</head>
+<body>
+  <div class="container is-max-desktop">
+    {% include 'fragments/header.html' %}
+
+    <div id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+ </div>
+</body>
+</html>

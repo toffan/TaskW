@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="title">
+  {{ project.name }}
+  <progress class="progress is-primary" value="{{ project.completeness_percent() }}" max="100">{{ project.completeness_percent() }}%</progress>
+</h1>
+
+<button class="button" hx-get="/tasks/new?project={{ project.name |urlb64encode }}" hx-swap="outerHTML" hx-target="#new-task">
+  + Add a task
+</button>
+
+<div id="new-task">
+</div>
+
+{% set tasks = project.tasks %}
+{% include "tasks/_list.html" %}
+
+{% endblock %}

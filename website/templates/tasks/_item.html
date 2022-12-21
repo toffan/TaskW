@@ -1,0 +1,74 @@
+{# Parameters: task: Task, view: TaskView #}
+<tr class="task-row-{{ task.status }}">
+{% if TaskView.EDITION in view %}
+  <td>
+    <div class="field is-horizontal">
+    {% if not task.completed and not task.deleted %}
+      <button class="button is-small is-primary" title="Done" hx-post="/tasks/{{ task.uuid }}/done">
+        <span class="icon">
+          <i class="fa-solid fa-square-check"></i>
+        </span>
+      </button>
+    {% endif %}
+      <a href="/tasks/{{ task.uuid }}">
+        <button class="button is-small" title="Edit">
+          <span class="icon">
+            <i class="fa-solid fa-pen"></i>
+          </span>
+        </button>
+      </a>
+    {% if not task.deleted %}
+      <button class="button is-small" title="Delete" hx-post="/tasks/{{ task.uuid }}/delete">
+        <span class="icon">
+          <i class="fa-solid fa-trash-can"></i>
+        </span>
+      </button>
+    {% endif %}
+    </div>
+  </td>
+{% endif %}
+
+  <td>{{ task.priority if task.priority is not none }}</td>
+  <td>
+    <span class="task-desc-{{ task.status }}">
+      {{ task.description |e }}
+    </span>
+  {% if task.annotations %}
+    <ul id="list-annotations">
+    {% for anno in task.annotations %}
+      <li><strong>{{ anno.entry |hrdate }}</strong> {{ anno.description |e }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </td>
+  <td>{{ task.due |hrdate }}</td>
+{% if TaskView.PROJECT in view %}
+  <td>
+  {% if task.project is not none %}
+    <a href="/projects/{{ task.project |urlb64encode }}">{{ task.project |e }}</a>
+  {% endif %}
+  </td>
+{% endif %}
+  <td>
+    <div class="tags">
+    {% for tag in task.tags %}
+    <a>
+      <span
+        class="tag is-link"
+        {% set tags = request.query_params['tags'] %}
+        hx-get="{{ request.path }}?tab={{ request.query_params['tab'] }}&tags={{ (tags + ',' + tag if tags else tag) |e }}"
+        hx-target="#tasks" hx-swap="innerHTML"
+      >
+        {{ tag |e }}
+      </span>
+    </a>
+    {% endfor %}
+    </div>
+  </td>
+{% if TaskView.HIDE in view %}
+  <td>{{ task.wait |hrdate }}</td>
+{% endif %}
+{% if TaskView.COMPLETION in view %}
+  <td>{{ task.end |hrdate }}</td>
+{% endif %}
+</tr>

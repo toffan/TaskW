@@ -1,0 +1,12 @@
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+
+data.location=/home/app/taskdata
+
+weekstart=Monday
+nag=
+
+recurrence=0
+
+# vim: set ft=taskrc:

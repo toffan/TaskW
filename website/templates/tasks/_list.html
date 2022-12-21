@@ -1,0 +1,30 @@
+{# Parameters: tasks, view #}
+<table id="list-tasks" class="table is-stripped is-hoverable is-fullwidth">
+  <input form="new-task-form" type="hidden" name="view" id="view" value="{{ view.value }}">
+  <thead>
+    <tr>
+    {% if TaskView.EDITION in view %}
+      <th></th>
+    {% endif %}
+      <th>Pr</th>
+      <th>Description</th>
+      <th>Due</th>
+    {% if TaskView.PROJECT in view %}
+      <th>Project</th>
+    {% endif %}
+      <th>Tags</th>
+    {% if TaskView.HIDE in view %}
+      <th>Hide until</th>
+    {% endif %}
+    {% if TaskView.COMPLETION in view %}
+      <th>Completed on</th>
+    {% endif %}
+    </tr>
+  </thead>
+
+  <tbody id="list-tasks-body" hx-target="closest tr" hx-swap="outerHTML">
+  {% for task in tasks %}
+    {% include "tasks/_item.html" %}
+  {% endfor %}
+  </tbody>
+</table>

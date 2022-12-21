@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form hx-put="/tasks/{{ task.uuid }}" hx-swap="none">
+  {% include "tasks/_item_form_elts.html" %}
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+    </div>
+    <div class="field-body">
+      <div class="control">
+        <input class="button is-primary" type="submit" value="Save">
+        <input class="button" type="reset" value="Reset">
+      </div>
+    </div>
+  </div>
+</form>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label" for="annotations">Annotations</label>
+    </div>
+    <div class="field-body">
+      {% include "annotations/_list.html" %}
+    </div>
+  </div>
+
+{% endblock %}

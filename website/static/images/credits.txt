@@ -1,0 +1,5 @@
+Images credits
+
+- TaskW*: crafted by me with GIMP, do what you want with it
+- icon*: licenced under Attribution 4.0 International (CC BY 4.0), downloaded from https://www.iconfinder.com/icons/8673935/ic_fluent_task_list_square_ltr_filled_icon
+- icon-add*: licenced under Attribution 4.0 International (CC BY 4.0), downloaded from https://www.iconfinder.com/icons/8673959/ic_fluent_task_list_square_add_filled_icon
