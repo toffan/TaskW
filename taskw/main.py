@@ -55,6 +55,17 @@ class TaskTab(enum.Enum):
         }
         return filters[self.value]
 
+    def get_sort_key(self):
+        sort_key = {
+            "pending": (lambda t: t["urgency"]),
+            "waiting": (lambda t: t["wait"]),
+            "completed": (lambda t: t["end"]),
+            "deleted": (lambda t: t["end"]),
+            # "today": ...,
+            # "deleted": ...,
+        }
+        return sort_key[self.value]
+
 
 class TaskView(enum.IntFlag):
     PROJECT = enum.auto()
@@ -111,7 +122,7 @@ def task_list(
         filter = tab.get_filters()
         tasks = manager.tasks.filter(**filter)
 
-    tasks = sorted(tasks, key=lambda t: t["urgency"], reverse=True)
+    tasks = sorted(tasks, key=tab.get_sort_key(), reverse=True)
 
     view = TaskView.PROJECT | TaskView.EDITION
     if tab == TaskTab.WAITING:
