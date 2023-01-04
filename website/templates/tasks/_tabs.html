@@ -3,22 +3,22 @@
     <div id="tabs-tasks" class="tabs">
       <ul>
         <li class="{{ 'is-active' if tab == 'pending' }}">
-          <a hx-get="/tasks/tabs?tab=pending&tags={{ tags }}">
+          <a hx-get="/tasks?tab=pending&tags={{ tags }}" hx-push-url="true">
             Pending
           </a>
         </li>
         <li class="{{ 'is-active' if tab == 'waiting' }}">
-          <a hx-get="/tasks/tabs?tab=waiting&tags={{ tags }}">
+          <a hx-get="/tasks?tab=waiting&tags={{ tags }}" hx-push-url="true">
             Waiting
           </a>
         </li>
         <li class="{{ 'is-active' if tab == 'completed' }}">
-          <a hx-get="/tasks/tabs?tab=completed&tags={{ tags }}">
+          <a hx-get="/tasks?tab=completed&tags={{ tags }}" hx-push-url="true">
             Completed
           </a>
         </li>
         <li class="{{ 'is-active' if tab == 'deleted' }}">
-          <a hx-get="/tasks/tabs?tab=deleted&tags={{ tags }}">
+          <a hx-get="/tasks?tab=deleted&tags={{ tags }}" hx-push-url="true">
             Deleted
           </a>
         </li>
@@ -31,7 +31,7 @@
       <p class="control is-expanded has-icons-left">
         <input class="input" type="search" name="tags"
           placeholder="tags..." value="{{ tags }}"
-          hx-get="/tasks/tabs?tab={{ tab }}"
+          hx-get="/tasks?tab={{ tab }}" hx-push-url="true"
         >
         <span class="icon is-left">
           <i class="fa-solid fa-tags"></i>

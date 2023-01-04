@@ -20,7 +20,7 @@
 </div>
 
 <div id="tasks"
-  hx-get="/tasks/tabs?tab={{ tab |e }}&tags={{ tags |e }}"
+  hx-get="/tasks?tab={{ tab |e }}&tags={{ tags |e }}"
   hx-trigger="load" hx-target="#tasks" hx-swap="innerHTML"
 >
 </div>

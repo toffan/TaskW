@@ -91,24 +91,26 @@ def sync(request: Request):
 #   TASKS   ###################################################################
 
 
-@app.get("/tasks")
+@app.get("/tasks", response_class=HTMLResponse)
 def home(
     request: Request,
     tab: TaskTab = TaskTab.PENDING,
     tags: str = "",
 ):
-    response = templates.TemplateResponse(
-        "tasks/home.html",
-        {
-            "request": request,
-            "tab": tab.value,
-            "tags": tags,
-        },
-    )
-    return response
+    if request.headers.get("HX-Request"):
+        return task_list(request, tab, tags)
+    else:
+        response = templates.TemplateResponse(
+            "tasks/home.html",
+            {
+                "request": request,
+                "tab": tab.value,
+                "tags": tags,
+            },
+        )
+        return response
 
 
-@app.get("/tasks/tabs", response_class=HTMLResponse)
 def task_list(
     request: Request,
     tab: TaskTab = TaskTab.PENDING,

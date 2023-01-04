@@ -57,6 +57,7 @@
         class="tag is-link"
         {% set tags = request.query_params['tags'] %}
         hx-get="{{ request.path }}?tab={{ request.query_params['tab'] }}&tags={{ (tags + ',' + tag if tags else tag) |e }}"
+        hx-push-url="true"
         hx-target="#tasks" hx-swap="innerHTML"
       >
         {{ tag |e }}
