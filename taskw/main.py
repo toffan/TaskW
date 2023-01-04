@@ -249,7 +249,9 @@ def task_save(
     task["tags"] = tagsl
 
     task.save()
-    headers = {"HX-Redirect": "/tasks"}
+
+    dest = request.headers.get("x-referer", "/tasks")
+    headers = {"HX-Redirect": dest}
     return Response(status_code=200, headers=headers)
 
 

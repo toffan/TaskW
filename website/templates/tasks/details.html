@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form hx-put="/tasks/{{ task.uuid }}" hx-swap="none">
+<form hx-put="/tasks/{{ task.uuid }}" hx-headers='{"x-referer": "{{ request.headers["referer"] |e }}"}' hx-swap="none">
   {% include "tasks/_item_form_elts.html" %}
 
   <div class="field is-horizontal">
