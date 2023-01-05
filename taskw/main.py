@@ -1,5 +1,7 @@
 import enum
 import os
+from urllib.parse import SplitResult
+from urllib.parse import urlencode
 
 from fastapi import FastAPI
 from fastapi import Form
@@ -21,6 +23,25 @@ from .utils import urlb64decode
 from .utils import urlb64encode
 
 
+def make_tag_url(request: Request, tag: str) -> str:
+    params = {}
+
+    if tab := request.query_params.get("tab"):
+        params["tab"] = tab
+
+    if tags := request.query_params.get("tags"):
+        tags = set(Tag.split(tags))
+        tags.add(tag)
+        params["tags"] = ",".join(tags)
+    else:
+        params["tags"] = tag
+
+    components = SplitResult(
+        scheme="", netloc="", path="/tasks", query=urlencode(params), fragment=""
+    )
+    return components.geturl()
+
+
 app = FastAPI(title="taskw", debug=True)
 
 app.mount("/static", StaticFiles(directory="website/static"), name="static")
@@ -29,6 +50,7 @@ templates = Jinja2Templates(directory="website/templates")
 templates.env.filters["hrdate"] = hrdate
 templates.env.filters["urlb64encode"] = urlb64encode
 templates.env.filters["urlb64decode"] = urlb64decode
+templates.env.globals["make_tag_url"] = make_tag_url
 
 manager = TaskWarrior(
     data_location=os.getenv("TASKDATA", "~/taskdata"),

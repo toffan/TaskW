@@ -52,17 +52,23 @@
   <td>
     <div class="tags">
     {% for tag in task.tags %}
-    <a>
-      <span
-        class="tag is-link"
-        {% set tags = request.query_params['tags'] %}
-        hx-get="{{ request.path }}?tab={{ request.query_params['tab'] }}&tags={{ (tags + ',' + tag if tags else tag) |e }}"
-        hx-push-url="true"
-        hx-target="#tasks" hx-swap="innerHTML"
-      >
-        {{ tag |e }}
-      </span>
-    </a>
+      {% if request.route.name == "home" %}
+        <a>
+          <span
+            class="tag is-link"
+            hx-get="{{ make_tag_url(request, tag) }}" hx-push-url="true"
+            hx-target="#tasks" hx-swap="innerHTML"
+          >
+            {{ tag |e }}
+          </span>
+        </a>
+      {% else %}
+        <a href="{{ make_tag_url(request, tag) }}">
+          <span class="tag is-link">
+            {{ tag |e }}
+          </span>
+        </a>
+      {% endif %}
     {% endfor %}
     </div>
   </td>
