@@ -7,17 +7,19 @@ from fastapi import FastAPI
 from fastapi import Form
 from fastapi import Request
 from fastapi.responses import HTMLResponse
+from fastapi.responses import JSONResponse
 from fastapi.responses import RedirectResponse
 from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import UUID4
-from tasklib import Task
 from tasklib import TaskWarrior
 
 from .models import Project
 from .models import Tag
+from .models import Task
 from .models import TaskPriority
+from .models import TaskStatus
 from .utils import hrdate
 from .utils import urlb64decode
 from .utils import urlb64encode
@@ -248,6 +250,45 @@ def task_get(request: Request, uuid: UUID4):
     return response
 
 
+@app.patch("/tasks/{uuid}", response_class=HTMLResponse)
+def task_patch(
+    request: Request,
+    uuid: UUID4,
+    status: TaskStatus = Form(...),
+    view: int = Form(...),
+):
+    task = manager.get_task(str(uuid))
+
+    try:
+        task.set_status(status)
+        task.save()
+    except Task.TaskConflict as e:
+        return JSONResponse(
+            {
+                "detail": [
+                    {
+                        "loc": ["query", "status"],
+                        "msg": e.msg,
+                        "type": "conflict",
+                        "ctx": e.ctx,
+                    }
+                ]
+            },
+            status_code=409,
+        )
+
+    response = templates.TemplateResponse(
+        "tasks/_item.html",
+        {
+            "request": request,
+            "task": task,
+            "view": TaskView(view),
+        },
+        status_code=200,
+    )
+    return response
+
+
 @app.put("/tasks/{uuid}")
 def task_save(
     request: Request,
@@ -258,6 +299,7 @@ def task_save(
     wait: str | None = Form(None),
     priority: TaskPriority | None = Form(None),
     tags: str = Form(""),
+    status: TaskStatus | None = Form(None),
 ):
     if priority:
         priority = priority.value
@@ -272,30 +314,28 @@ def task_save(
     task["priority"] = priority
     task["tags"] = tagsl
 
+    if status is not None:
+        try:
+            task.set_status(status)
+        except Task.TaskConflict as e:
+            return JSONResponse(
+                {
+                    "detail": [
+                        {
+                            "loc": ["query", "status"],
+                            "msg": e.msg,
+                            "type": "conflict",
+                            "ctx": e.ctx,
+                        }
+                    ]
+                },
+                status_code=409,
+            )
+
     task.save()
 
     dest = request.headers.get("x-referer", "/tasks")
     headers = {"HX-Redirect": dest}
-    return Response(status_code=200, headers=headers)
-
-
-@app.post("/tasks/{uuid}/done")
-def task_done(request: Request, uuid: UUID4):
-    task = manager.get_task(str(uuid))
-    task.done()
-    task.save()
-
-    headers = {"HX-Trigger": "reload-tasks"}
-    return Response(status_code=200, headers=headers)
-
-
-@app.post("/tasks/{uuid}/delete")
-def task_delete(request: Request, uuid: UUID4):
-    task = manager.get_task(str(uuid))
-    task.delete()
-    task.save()
-
-    headers = {"HX-Trigger": "reload-tasks"}
     return Response(status_code=200, headers=headers)
 
 

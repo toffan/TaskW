@@ -4,11 +4,14 @@
   <td>
     <div class="field is-horizontal">
     {% if not task.completed and not task.deleted %}
-      <button class="button is-small is-primary" title="Done" hx-post="/tasks/{{ task.uuid }}/done">
-        <span class="icon">
-          <i class="fa-solid fa-square-check"></i>
-        </span>
-      </button>
+      <form hx-patch="/tasks/{{ task.uuid }}" hx-target="closest tr" hx-swap="outerHTML">
+        <input type="hidden" name="view" value="{{ view.value }}">
+        <button class="button is-small is-primary" title="Done" name="status" value="completed">
+          <span class="icon">
+            <i class="fa-solid fa-square-check"></i>
+          </span>
+        </button>
+      </form>
     {% endif %}
       <a href="/tasks/{{ task.uuid }}">
         <button class="button is-small" title="Edit">
@@ -18,11 +21,14 @@
         </button>
       </a>
     {% if not task.deleted %}
-      <button class="button is-small" title="Delete" hx-post="/tasks/{{ task.uuid }}/delete">
-        <span class="icon">
-          <i class="fa-solid fa-trash-can"></i>
-        </span>
-      </button>
+      <form hx-patch="/tasks/{{ task.uuid }}" hx-target="closest tr" hx-swap="outerHTML">
+        <input type="hidden" name="view" value="{{ view.value }}">
+        <button class="button is-small" title="Delete" name="status" value="deleted">
+          <span class="icon">
+            <i class="fa-solid fa-trash-can"></i>
+          </span>
+        </button>
+      </form>
     {% endif %}
     </div>
   </td>

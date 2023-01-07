@@ -9,7 +9,17 @@
     </div>
     <div class="field-body">
       <div class="control">
-        <input class="button is-primary" type="submit" value="Save">
+        <button class="button is-primary" type="submit" name="status" value="">Save</button>
+      {% if task.status == "pending" %}
+        <button class="button is-primary" type="submit" name="status" value="completed">Done</button>
+      {% elif task.status == "completed" %}
+        <button class="button is-danger" type="submit" name="status" value="pending">Undo</button>
+      {% elif task.status == "deleted" %}
+        <button class="button is-danger" type="submit" name="status" value="pending">Restore</button>
+      {% endif %}
+      {% if task.status != "deleted" %}
+        <button class="button is-danger" type="submit" name="status" value="deleted">Delete</button>
+      {% endif %}
         <input class="button" type="reset" value="Reset">
       </div>
     </div>

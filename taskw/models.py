@@ -83,3 +83,34 @@ class Tag:
         "+foo -bar +baz +xxyyz"
         """
         return " ".join(t if t[0] == "-" else "+" + t for t in Tag.split(s))
+
+
+class TaskStatus(enum.Enum):
+    PENDING = "pending"
+    COMPLETED = "completed"
+    DELETED = "deleted"
+
+
+class TaskConflict(Exception):
+    def __init__(self, msg: str, ctx: dict = {}):
+        self.msg = msg
+        self.ctx = ctx
+
+    def __str__(self) -> str:
+        return self.msg
+
+
+def Task_set_status(task: Task, status: TaskStatus):
+    if task["status"] == status.value or (
+        task.deleted and status == TaskStatus.COMPLETED
+    ):
+        raise TaskConflict(
+            msg="status is not applicable",
+            ctx={"task": {"status": task["status"]}},
+        )
+
+    task["status"] = status.value
+
+
+Task.set_status = Task_set_status
+Task.TaskConflict = TaskConflict
