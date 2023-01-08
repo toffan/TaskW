@@ -228,7 +228,7 @@ def task_create(
     return response
 
 
-@app.get("/tasks/{uuid}")
+@app.get("/tasks/{uuid}", response_class=HTMLResponse)
 def task_get(request: Request, uuid: UUID4):
     try:
         task = manager.get_task(str(uuid))
@@ -342,7 +342,7 @@ def task_save(
 #   ANNOTATIONS   #############################################################
 
 
-@app.post("/tasks/{uuid}/annotations")
+@app.post("/tasks/{uuid}/annotations", response_class=HTMLResponse)
 def annotation_create(request: Request, uuid: UUID4, annotation: str = Form(...)):
     task = manager.get_task(str(uuid))
     task.add_annotation(annotation)
@@ -361,7 +361,7 @@ def annotation_create(request: Request, uuid: UUID4, annotation: str = Form(...)
     return response
 
 
-@app.get("/tasks/{uuid}/annotations")
+@app.get("/tasks/{uuid}/annotations", response_class=HTMLResponse)
 def annotation_list(request: Request, uuid: UUID4):
     task = manager.get_task(str(uuid))
     response = templates.TemplateResponse(
@@ -374,7 +374,7 @@ def annotation_list(request: Request, uuid: UUID4):
     return response
 
 
-@app.delete("/tasks/{uuid}/annotations/{annotation64}")
+@app.delete("/tasks/{uuid}/annotations/{annotation64}", response_class=HTMLResponse)
 def annotation_delete(request: Request, uuid: UUID4, annotation64: str):
     task = manager.get_task(str(uuid))
     task.remove_annotation(urlb64decode(annotation64))
@@ -386,7 +386,7 @@ def annotation_delete(request: Request, uuid: UUID4, annotation64: str):
 #   PROJECTS   ################################################################
 
 
-@app.get("/projects")
+@app.get("/projects", response_class=HTMLResponse)
 def project_list(request: Request):
     projects = Project.filter(manager, lambda p: p.completeness() < 1.0)
 
@@ -401,7 +401,7 @@ def project_list(request: Request):
     return response
 
 
-@app.get("/projects/{project64}")
+@app.get("/projects/{project64}", response_class=HTMLResponse)
 def project_get(request: Request, project64: str):
     name = urlb64decode(project64)
     project = Project.get(manager, name)
