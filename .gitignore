@@ -1,1 +1,4 @@
 website/static/fontawesome*
+
+.coverage
+htmlcov

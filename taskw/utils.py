@@ -18,6 +18,14 @@ def urlb64decode(s: str) -> str:
     return urlsafe_b64decode(s).decode()
 
 
+def today():
+    """Wrapper around date.today to ease tests.
+    date.today cannot be mocked in tests so mock this wrapper instead.
+    Performance cost is affordable given the expected throughput.
+    """
+    return date.today()
+
+
 def hrdate(d: date | datetime | None) -> str:
     """Human readable relative date"""
     if d is None:
@@ -25,7 +33,7 @@ def hrdate(d: date | datetime | None) -> str:
     elif isinstance(d, datetime):
         d = d.date()
 
-    days = (d - date.today()).days
+    days = (d - today()).days
     if days < -7:
         return d.isoformat()
     if days < -1:
