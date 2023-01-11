@@ -15,7 +15,6 @@ uvicorn = "^0.20.0"
 
 
 [tool.poetry.group.dev.dependencies]
-uvicorn = {extras = ["standard"], version = "^0.20.0"}
 
 [build-system]
 requires = ["poetry-core"]
