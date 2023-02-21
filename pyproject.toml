@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "taskw"
-version = "0.0.1"
+version = "0.0.2"
 description = "A web UI for taskwarrior"
 authors = ["toffan <git.srv@toffan.org>"]
 readme = "README.md"
