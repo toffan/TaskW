@@ -9,7 +9,7 @@ browser (desktop or mobile).
 - Easily edit a task in its main characteristics
 - List all projects and their pending tasks
 - Search by tags
-- Can synchronize with a remote taskwarrior-server (see [documentation](TODO))
+- Can synchronize with a remote taskwarrior-server (see [documentation](/docs/how-to/sync.md))
 - Is mobile friendly
 
 ## Getting started
